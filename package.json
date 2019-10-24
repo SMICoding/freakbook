@@ -1,0 +1,19 @@
+{
+  "name": "freak-book",
+  "version": "1.0.0",
+  "description": "open source social web application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SMICoding/freakbook.git"
+  },
+  "author": "Daniel Schmidt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SMICoding/freakbook/issues"
+  },
+  "homepage": "https://github.com/SMICoding/freakbook#readme"
+}
