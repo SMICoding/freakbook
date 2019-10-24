@@ -4,7 +4,10 @@
   "description": "open source social web application",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server",
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,18 @@
   "bugs": {
     "url": "https://github.com/SMICoding/freakbook/issues"
   },
-  "homepage": "https://github.com/SMICoding/freakbook#readme"
+  "homepage": "https://github.com/SMICoding/freakbook#readme",
+  "devDependencies": {
+    "concurrently": "^5.0.0",
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.2.3",
+    "express": "^4.17.1",
+    "express-validator": "^6.2.0",
+    "gravatar": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.6"
+  }
 }
