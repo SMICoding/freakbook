@@ -46,6 +46,12 @@ router.post(
           .json({ errors: [{ msg: 'Invalid Credentials' }] });
       }
 
+      if (!user.isVerified) {
+        return res.status(400).json({
+          errors: [{ msg: 'Access denied, please confirm your email to login' }]
+        });
+      }
+
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {

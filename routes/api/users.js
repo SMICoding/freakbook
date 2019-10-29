@@ -3,10 +3,12 @@ const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
+const Token = require('../../models/Token');
 
 // @route   POST api/users
 // @desc    Register user
@@ -71,6 +73,16 @@ router.post(
           id: user.id
         }
       };
+
+      // Generate token for email confirmation
+      const token = new Token({
+        _userId: user.id,
+        token: crypto.randomBytes(16).toString('hex')
+      });
+
+      console.log(token);
+
+      await token.save();
 
       jwt.sign(
         payload,
