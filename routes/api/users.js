@@ -20,9 +20,6 @@ router.post(
     check('lastname', 'Lastname is required')
       .not()
       .isEmpty(),
-    check('username', 'Username is required')
-      .not()
-      .isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check(
       'password',
@@ -35,7 +32,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { firstname, lastname, username, email, password } = req.body;
+    const { firstname, lastname, email, password } = req.body;
     try {
       // See if user already exist
       let user = await User.findOne({ email });
@@ -56,7 +53,6 @@ router.post(
       user = new User({
         firstname,
         lastname,
-        username,
         email,
         avatar,
         password
