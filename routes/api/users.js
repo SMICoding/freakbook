@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const config = require('config');
+const nodemailer = require('nodemailer');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
@@ -83,6 +84,45 @@ router.post(
       console.log(token);
 
       await token.save();
+
+      // Send email to user
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: config.get('gmailUser'),
+          pass: config.get('gmailPassword')
+        }
+      });
+
+      const mailOptions = {
+        from: config.get('gmailUser'),
+        to: user.email,
+        subject: 'Account Verification',
+        text:
+          'Hello,\n\n' +
+          'Please verify your account by clicking the link: \nhttp://' +
+          req.headers.host +
+          '/confirmation/' +
+          token.token +
+          '.\n'
+      };
+
+      // console.log(config.get('gmailUser'));
+      // console.log(config.get('gmailPassword'));
+      // console.log(user.email);
+      // console.log(token.token);
+
+      transporter.sendMail(mailOptions, function(err) {
+        if (err) {
+          return res.status(500).send({ msg: err.message });
+        } else {
+          console.log(
+            res
+              .status(200)
+              .send('A verification email has been sent to ' + user.email + '.')
+          );
+        }
+      });
 
       jwt.sign(
         payload,
